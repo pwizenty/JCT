@@ -1,0 +1,66 @@
+context BookingManagement {
+    structure ParkingSpaceBooking<aggregate, entity> {
+        long bookingID<identifier>,
+        ParkingSpace parkingSpace<part>,
+        Driver driver<part>,
+        TimeSlot timeSlot<part>,
+        double priceInEuro,
+        function double priceInDollars
+    }
+
+    structure ParkingSpace<entity> {
+        long id<identifier>,
+        long ownerId,
+        string name,
+        string description,
+        Location location,
+        int parkingSpaceCount,
+        TimeSlots availability,
+        float priceInEuroPerHour,
+        float priceInEuroPerKwh,
+        ChargerSpeed chargerSpeed,
+        string plugType,
+        boolean activated,
+        boolean blocked,
+        boolean offered,
+        immutable date createdDate,
+        date lastModifiedDate
+    }
+
+    structure Location<valueObject> {
+        immutable double latitude,
+        immutable double longitude
+    }
+
+    collection TimeSlots { TimeSlot s }
+
+    enum ChargerSpeed {
+        FAST,
+        NORMAL
+    }
+
+    structure Driver<valueObject> {
+        string id<identifier>
+    }
+
+    structure TimeSlot<valueObject> {
+        immutable date start,
+        immutable date end
+    }
+
+    structure ParkingSpaceBookingFactory<factory> {
+        function ParkingSpaceBooking create(Driver d, ParkingSpace p, TimeSlot t,
+            double priceInEuro)
+    }
+
+    structure BookingExpiration<specification> {
+        function boolean isExpired(ParkingSpaceBooking b)<validator>
+    }
+
+    structure ParkingSpaceBookingVO<valueObject> {
+        immutable string driver,
+        immutable long parkingSpace,
+        immutable TimeSlot timeSlot,
+        immutable double priceInEuro
+    }
+}
