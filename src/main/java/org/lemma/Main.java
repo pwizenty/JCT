@@ -1,4 +1,4 @@
-package org.example;
+package org.lemma;
 
 import com.google.inject.Injector;
 import de.fhdo.lemma.data.ComplexType;
