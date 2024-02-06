@@ -15,4 +15,13 @@ public class Interface {
     this.annotations = annotations;
     this.operations = operations;
   }
+
+  @Override
+  public String toString() {
+    return "Interface{" +
+      "\nname='" + name + '\'' +
+      "\n, annotations=" + annotations +
+      "\n, operations=" + operations +
+      "\n}";
+  }
 }

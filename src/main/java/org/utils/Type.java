@@ -19,4 +19,15 @@ public class Type {
     this.isPrimitive = isPrimitive;
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return "Type{" +
+      "\nname='" + name + '\'' +
+      "\n, annotations=" + annotations +
+      "\n, subnodes=" + subnodes +
+      "\n, isPrimitive=" + isPrimitive +
+      "\n, value='" + value + '\'' +
+      "\n}";
+  }
 }

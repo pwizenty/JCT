@@ -15,4 +15,17 @@ public class TypeWithCardinality extends Type {
     this.min = min;
     this.max = max;
   }
+
+ @Override
+ public String toString() {
+  return "TypeWithCardinality{" +
+    "\nmin=" + min +
+    "\n, max=" + max +
+    "\n, name='" + name + '\'' +
+    "\n, annotations=" + annotations +
+    "\n, subnodes=" + subnodes +
+    "\n, isPrimitive=" + isPrimitive +
+    "\n, value='" + value + '\'' +
+    "\n}";
+ }
 }

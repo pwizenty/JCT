@@ -14,4 +14,13 @@ public class Program {
     this.types = types;
     this.interfaces = interfaces;
   }
+
+  @Override
+  public String toString() {
+    return "Program{" +
+      "\nsourcefile=" + sourcefile +
+      "\n, types=" + types +
+      "\n, interfaces=" + interfaces +
+      "\n}";
+  }
 }

@@ -8,14 +8,30 @@ public class Operation {
 
   String name;
   Set< Annotation > annotations;
-  Type inputType;
-  Type outputType;
+  String inputType;
+  String outputType;
 
-  public Operation( String name, Set< Annotation > annotations, Type inputType, Type outputType ) {
+  public Operation( String name, Set< Annotation > annotations, String inputType ) {
+    this.name = name;
+    this.annotations = annotations;
+    this.inputType = inputType;
+    this.outputType = null;
+  }
+
+  public Operation( String name, Set< Annotation > annotations, String inputType, String outputType ) {
     this.name = name;
     this.annotations = annotations;
     this.inputType = inputType;
     this.outputType = outputType;
   }
 
+  @Override
+  public String toString() {
+    return "Operation{" +
+      "\nname='" + name + '\'' +
+      "\n, annotations=" + annotations +
+      "\n, inputType='" + inputType + '\'' +
+      "\n, outputType='" + outputType + '\'' +
+      "\n}";
+  }
 }
