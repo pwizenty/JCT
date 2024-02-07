@@ -19,32 +19,32 @@ public class Program {
     return sourcefile;
   }
 
-  public void setSourcefile(Path sourcefile) {
+  public void setSourcefile( Path sourcefile ) {
     this.sourcefile = sourcefile;
   }
 
-  public Set<Type> getTypes() {
+  public Set< Type > getTypes() {
     return types;
   }
 
-  public void setTypes(Set<Type> types) {
+  public void setTypes( Set< Type > types ) {
     this.types = types;
   }
 
-  public Set<Interface> getInterfaces() {
+  public Set< Interface > getInterfaces() {
     return interfaces;
   }
 
-  public void setInterfaces(Set<Interface> interfaces) {
+  public void setInterfaces( Set< Interface > interfaces ) {
     this.interfaces = interfaces;
   }
 
   @Override
   public String toString() {
     return "Program{" +
-      "\nsourcefile=" + sourcefile +
-      "\n, types=" + types +
-      "\n, interfaces=" + interfaces +
-      "\n}";
+        "\nsourcefile=" + sourcefile +
+        "\n, types=" + types +
+        "\n, interfaces=" + interfaces +
+        "\n}";
   }
 }

@@ -26,6 +26,7 @@ import jolie.lang.parse.ast.types.TypeChoiceDefinition;
 import jolie.lang.parse.ast.types.TypeDefinitionLink;
 import jolie.lang.parse.ast.types.TypeInlineDefinition;
 import org.utils.Interface;
+import org.utils.Operation;
 import org.utils.Type;
 import org.utils.TypeWithCardinality;
 import org.utils.annotations.*;
@@ -36,32 +37,44 @@ import java.util.stream.Collectors;
 
 public class AnnotationParser {
 
-	public AnnotationParser() {}
+  private static HashMap< String, Class< ? extends Annotation > > aMap = new HashMap<>();
 
-	public static Set< Annotation > parse( String annotation ) {
-		return Arrays.stream( annotation.split( "\n" ) )
-				.map( String::trim )
-				.map( AnnotationParser::parseSingleAnnotation )
-				.collect( Collectors.toSet());
-	}
+  static {
+    aMap.put( "Entity", Entity.class );
+    aMap.put( "Identifier", Identifier.class );
+    aMap.put( "Part", Part.class );
+    aMap.put( "Aggregate", Aggregate.class );
+  }
 
-	private static Annotation parseSingleAnnotation( String s ) {
-		try {
-			HashMap< String, Class< ? extends Annotation > > aMap = new HashMap<>();
-			aMap.put( "Entity", Entity.class );
-			aMap.put( "Identifier", Identifier.class );
-			aMap.put( "Part", Part.class );
-			aMap.put( "Aggregate", Aggregate.class );
-			Optional< Class< ? extends Annotation > > c = aMap.entrySet().stream()
-					.filter( e -> s.toLowerCase().contains( e.getKey().toLowerCase() ) )
-					.findAny().map( Map.Entry::getValue );
-			if ( c.isPresent() ) {
-				return c.get().getConstructor().newInstance();
-			}
-		} catch ( NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e ){
-			e.printStackTrace();
-		}
-		return new UnrecognizedAnnotation( s );
-	}
+  public AnnotationParser() {
+  }
+
+  public static Set< Annotation > parse( String annotation ) {
+    return Arrays.stream( annotation.split( "\n" ) )
+        .map( String::trim )
+        .map( AnnotationParser::parseSingleAnnotation )
+        .filter( Optional::isPresent )
+				.map( Optional::get )
+        .collect( Collectors.toSet() );
+  }
+
+  private static Optional< Annotation > parseSingleAnnotation( String s ) {
+    if ( s.isEmpty() || s.isBlank() ) {
+			return Optional.empty();
+    } else {
+      try {
+        Optional< Class< ? extends Annotation > > c = aMap.entrySet().stream()
+            .filter( e -> s.toLowerCase().contains( e.getKey().toLowerCase() ) )
+            .findAny().map( Map.Entry::getValue );
+        if ( c.isPresent() ) {
+          return Optional.of( c.get().getConstructor().newInstance() );
+        }
+      } catch ( NoSuchMethodException | InvocationTargetException | InstantiationException |
+                IllegalAccessException e ) {
+        e.printStackTrace();
+      }
+      return Optional.of( new UnrecognizedAnnotation( s ) );
+    }
+  }
 
 }

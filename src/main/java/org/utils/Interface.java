@@ -4,7 +4,7 @@ import org.utils.annotations.Annotation;
 
 import java.util.Set;
 
-public class Interface {
+public class Interface extends SourceElement< Interface > {
 
   String name;
   Set< Annotation > annotations;

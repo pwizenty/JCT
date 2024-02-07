@@ -4,7 +4,7 @@ import org.utils.annotations.Annotation;
 
 import java.util.Set;
 
-public class Operation {
+public class Operation extends SourceElement< Operation > {
 
   String name;
   Set< Annotation > annotations;

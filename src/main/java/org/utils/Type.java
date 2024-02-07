@@ -4,7 +4,7 @@ import org.utils.annotations.Annotation;
 
 import java.util.Set;
 
-public class Type {
+public class Type extends SourceElement< Type > {
 
   String name;
   Set< Annotation > annotations;

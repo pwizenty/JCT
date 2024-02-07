@@ -60,9 +60,9 @@ public class JolieVisitor {
   String value = typeInlineDefinition.basicType().nativeType().name();
   if ( subnode ) {
    return new TypeWithCardinality( name, annotations, subnodes, false, value,
-     typeInlineDefinition.cardinality().min(), typeInlineDefinition.cardinality().max() );
+     typeInlineDefinition.cardinality().min(), typeInlineDefinition.cardinality().max() ).setLine( typeInlineDefinition.context().line() );
   } else {
-   return new Type( name, annotations, subnodes, true, value );
+   return new Type( name, annotations, subnodes, true, value ).setLine( typeInlineDefinition.context().line() );
   }
  }
 
@@ -88,7 +88,7 @@ public class JolieVisitor {
       .collect( Collectors.toSet() ),
     interfaceDefinition.operationsMap().entrySet().stream()
       .map( e -> visit( e.getValue() ) ).collect( Collectors.toSet() )
-  );
+  ).setLine( interfaceDefinition.context().line() );
  }
 
  public Operation visit( OperationDeclaration operationDeclaration ) {
@@ -106,7 +106,7 @@ public class JolieVisitor {
       .flatMap( a -> AnnotationParser.parse( a ).stream() )
       .collect( Collectors.toSet() ),
     oneWayOperationDeclaration.requestType().name()
-  );
+  ).setLine( oneWayOperationDeclaration.context().line() );
  }
 
  public Operation visit( RequestResponseOperationDeclaration requestResponseOperationDeclaration ) {
@@ -117,7 +117,7 @@ public class JolieVisitor {
       .collect( Collectors.toSet() ),
     requestResponseOperationDeclaration.requestType().name(),
     requestResponseOperationDeclaration.responseType().name()
-  );
+  ).setLine( requestResponseOperationDeclaration.context().line() );
  }
 
 }

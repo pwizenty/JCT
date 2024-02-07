@@ -12,31 +12,31 @@ import java.util.List;
 
 public class Main {
 
- public static void main( String[] args ) {
-  try {
-   System.out.println(
-     StructParser.parse( new String[]{ "src/test/jolie/MyInterface.ol" } )
-   );
+  public static void main( String[] args ) {
+    try {
+      System.out.println(
+          StructParser.parse( new String[]{ "src/test/jolie/MyInterface.ol" } )
+      );
 
-   // Start program analysis
-   // Check for entity violations
-   var program = StructParser.parse( new String[]{ "src/test/jolie/EntityTest.ol" } );
-   var results = new DomainDrivenDesignAnalyzer(program).analyze();
-   printResults(results);
+      // Start program analysis
+      // Check for entity violations
+      var program = StructParser.parse( new String[]{ "src/test/jolie/EntityTest.ol" } );
+      var results = new DomainDrivenDesignAnalyzer( program ).analyze();
+      printResults( results );
 
-  } catch ( IOException | CommandLineException | ParserException | CodeCheckingException | ModuleException e ) {
-   e.printStackTrace();
+    } catch ( IOException | CommandLineException | ParserException | CodeCheckingException | ModuleException e ) {
+      e.printStackTrace();
+    }
   }
- }
 
- public static void printResults(List<Result> results) {
-  System.out.println("+--------------------------------------------------------------------------------------+");
-  System.out.println("| Entity                    | Line Number | Description                              | Status    |");
-  System.out.println("+--------------------------------------------------------------------------------------+");
-  for (Result result : results) {
-   System.out.printf("| %-25s | %-11d | %-40s | %-9s |\n",
-           result.getViolationName(), result.getLineNumber(), result.getDescription(), result.getStatus());
+  public static void printResults( List< Result > results ) {
+    System.out.println( "+--------------------------------------------------------------------------------------+" );
+    System.out.println( "| Entity                    | Line Number | Description                              | Status    |" );
+    System.out.println( "+--------------------------------------------------------------------------------------+" );
+    for ( Result result : results ) {
+      System.out.printf( "| %-25s | %-11d | %-40s | %-9s |\n",
+          result.getViolationName(), result.getLineNumber(), result.getDescription(), result.getStatus() );
+    }
   }
- }
 
 }
