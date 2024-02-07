@@ -15,6 +15,30 @@ public class Program {
     this.interfaces = interfaces;
   }
 
+  public Path getSourcefile() {
+    return sourcefile;
+  }
+
+  public void setSourcefile(Path sourcefile) {
+    this.sourcefile = sourcefile;
+  }
+
+  public Set<Type> getTypes() {
+    return types;
+  }
+
+  public void setTypes(Set<Type> types) {
+    this.types = types;
+  }
+
+  public Set<Interface> getInterfaces() {
+    return interfaces;
+  }
+
+  public void setInterfaces(Set<Interface> interfaces) {
+    this.interfaces = interfaces;
+  }
+
   @Override
   public String toString() {
     return "Program{" +
