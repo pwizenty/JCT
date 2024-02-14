@@ -47,7 +47,7 @@ public class StructParser {
 
    Set< Type > types = program.children().stream()
      .filter( c -> c instanceof TypeDefinition )
-     .map( node -> new JolieVisitor().visit( ( TypeDefinition ) node, false ) )
+     .map( node -> new JolieVisitor().visit( ( TypeDefinition ) node ) )
      .collect( Collectors.toSet() );
 
    return new org.utils.Program(

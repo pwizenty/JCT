@@ -60,6 +60,10 @@ public class Type extends SourceElement< Type > {
     this.value = value;
   }
 
+  public TypeWithCardinality toTypeWithCardinality( int min, int max ){
+    return new TypeWithCardinality( this.name, this.annotations, this.subnodes, this.isPrimitive, this.value, min, max );
+  }
+
   @Override
   public String toString() {
     return "Type{" +
