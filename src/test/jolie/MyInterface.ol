@@ -9,7 +9,7 @@ type TimeSlot: string
 /**
 @aggregate
 @entity
-/*
+*/
 type PSB {
     ///@identifier
     bookingID: long
