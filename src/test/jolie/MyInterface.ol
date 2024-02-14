@@ -6,8 +6,10 @@ interface MyInterface {
 
 type TimeSlot: string
 
-///@aggregate
-///@entity
+/**
+@aggregate
+@entity
+/*
 type PSB {
     ///@identifier
     bookingID: long
