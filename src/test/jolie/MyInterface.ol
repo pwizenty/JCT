@@ -1,3 +1,5 @@
+///@ctx(BookingManagement)
+
 /// @interface comment
 interface MyInterface {
 	oneWay: ow_1( string ), ow_2( MyType )

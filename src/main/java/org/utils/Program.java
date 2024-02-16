@@ -1,5 +1,7 @@
 package org.utils;
 
+import org.utils.annotations.Annotation;
+
 import java.nio.file.Path;
 import java.util.Set;
 
@@ -8,10 +10,12 @@ public class Program {
   Path sourcefile;
   Set< Type > types;
   Set< Interface > interfaces;
+  Set< Annotation > annotations;
 
-  public Program( Path sourcefile, Set< Type > types, Set< Interface > interfaces ) {
+  public Program( Path sourcefile, Set< Type > types, Set< Annotation > annotations, Set< Interface > interfaces ) {
     this.sourcefile = sourcefile;
     this.types = types;
+    this.annotations = annotations;
     this.interfaces = interfaces;
   }
 
@@ -39,10 +43,15 @@ public class Program {
     this.interfaces = interfaces;
   }
 
+  public Set< Annotation > getAnnotations() {
+    return annotations;
+  }
+
   @Override
   public String toString() {
     return "Program{" +
         "\nsourcefile=" + sourcefile +
+        "\n, annotations=" + annotations +
         "\n, types=" + types +
         "\n, interfaces=" + interfaces +
         "\n}";

@@ -13,9 +13,11 @@ import jolie.lang.parse.module.ModuleException;
 import jolie.lang.parse.util.ParsingUtils;
 import org.utils.Interface;
 import org.utils.Type;
+import org.utils.annotations.BoundedContext;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,8 @@ public class StructParser {
      configuration,
      true );
 
+   Optional< BoundedContext > boundedContext = BoundedContextParser.parse( args );
+
    Set< Interface > interfaces = program.children().stream()
      .filter( c -> c instanceof InterfaceDefinition )
      .map( node -> new JolieVisitor().visit( ( InterfaceDefinition ) node ) )
@@ -53,6 +57,7 @@ public class StructParser {
    return new org.utils.Program(
      interpreterConfiguration.programFilepath().toPath(),
      types,
+     BoundedContextParser.parse( args ).stream().collect( Collectors.toSet()),
      interfaces
    );
 
