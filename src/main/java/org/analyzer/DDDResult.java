@@ -1,15 +1,17 @@
 package org.analyzer;
 
-public class Result {
+import org.utils.ResultStatus;
+
+public class DDDResult {
     private String violationName;
     private int lineNumber;
     private String description;
     private ResultStatus status;
 
-    public Result() {
+    public DDDResult() {
     }
 
-    public Result(String violationName, int lineNumber, String description, ResultStatus status) {
+    public DDDResult(String violationName, int lineNumber, String description, ResultStatus status) {
         this.violationName = violationName;
         this.lineNumber = lineNumber;
         this.description = description;

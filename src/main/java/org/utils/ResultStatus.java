@@ -1,4 +1,4 @@
-package org.analyzer;
+package org.utils;
 
 public enum ResultStatus {
     CORRECT,

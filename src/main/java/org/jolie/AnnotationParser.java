@@ -44,6 +44,9 @@ public class AnnotationParser {
     aMap.put( "Identifier", Identifier.class );
     aMap.put( "Part", Part.class );
     aMap.put( "Aggregate", Aggregate.class );
+    aMap.put( "Repository", Repository.class );
+    aMap.put( "Value_Object", ValueObject.class );
+    aMap.put( "CONTEXT", BoundedContext.class );
   }
 
   public AnnotationParser() {

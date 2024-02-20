@@ -1,3 +1,4 @@
 package org.utils.annotations;
 
-public interface Annotation {}
+public interface Annotation {
+}

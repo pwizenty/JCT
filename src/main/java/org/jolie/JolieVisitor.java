@@ -57,7 +57,8 @@ public class JolieVisitor {
     if ( typeInlineDefinition.subTypes() != null ) {
       subnodes = typeInlineDefinition.subTypes().stream()
           .map( e ->
-              visit( e.getValue() ).toTypeWithCardinality( e.getValue().cardinality().min(), e.getValue().cardinality().max() )
+              visit( e.getValue() ).toTypeWithCardinality( e.getValue().cardinality().min(), e.getValue().cardinality()
+                .max() )
           ).collect( Collectors.toSet() );
     }
     String value = typeInlineDefinition.basicType().nativeType().name();
@@ -70,7 +71,7 @@ public class JolieVisitor {
        .collect( Collectors.toSet() );
     return new Type( typeDefinitionLink.name(), annotations, Collections.emptySet(), false,
         typeDefinitionLink.linkedTypeName()
-    );
+    ).setLine(typeDefinitionLink.context().line());
   }
 
   public Type _visit( TypeChoiceDefinition typeChoiceDefinition ) {
@@ -80,7 +81,7 @@ public class JolieVisitor {
     return new Type( typeChoiceDefinition.name(),
         annotations, Collections.emptySet(), false,
         typeChoiceDefinition.left().name() + " + " + typeChoiceDefinition.right().name()
-    );
+    ).setLine(typeChoiceDefinition.context().line());
   }
 
   public Interface visit( InterfaceDefinition interfaceDefinition ) {
@@ -122,5 +123,4 @@ public class JolieVisitor {
         requestResponseOperationDeclaration.responseType().name()
     ).setLine( requestResponseOperationDeclaration.context().line() );
   }
-
 }

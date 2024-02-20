@@ -2,6 +2,7 @@ package org.utils;
 
 import org.utils.annotations.Annotation;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Type extends SourceElement< Type > {
@@ -73,5 +74,29 @@ public class Type extends SourceElement< Type > {
       "\n, isPrimitive=" + isPrimitive +
       "\n, value='" + value + '\'' +
       "\n}";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Type type = (Type) o;
+
+    if (isPrimitive != type.isPrimitive) return false;
+    if (!Objects.equals(name, type.name)) return false;
+    if (!Objects.equals(annotations, type.annotations)) return false;
+    if (!Objects.equals(subnodes, type.subnodes)) return false;
+    return Objects.equals(value, type.value);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = name != null ? name.hashCode() : 0;
+    result = 31 * result + (annotations != null ? annotations.hashCode() : 0);
+    result = 31 * result + (subnodes != null ? subnodes.hashCode() : 0);
+    result = 31 * result + (isPrimitive ? 1 : 0);
+    result = 31 * result + (value != null ? value.hashCode() : 0);
+    return result;
   }
 }
