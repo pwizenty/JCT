@@ -1,0 +1,13 @@
+context User {
+	structure Customer <entity,aggregate> {
+		int customerRef <identifier>,
+		string firstName,
+		string lastName,
+		Username username
+	}
+
+	structure Username<valueObject> {
+		immutable string username
+	}
+
+}
