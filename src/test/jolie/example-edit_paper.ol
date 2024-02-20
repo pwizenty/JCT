@@ -4,12 +4,13 @@
 @aggregate(context = "User")
 */
 type Customer {
-    ///@IDENTIFIER
-    customerRef: int
-    firstName: string
-    lastName: string
-    ///@PART
-    username: Username
+	customerRef: int
+	firstName: string
+	lastName: string
+	/** @identifier
+	    @part
+	*/
+	username: string
 }
 
 type Username {

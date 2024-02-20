@@ -26,12 +26,12 @@ public class Main {
       //var program = StructParser.parse( new String[]{ "src/test/jolie/EntityTest.ol" } );
       //var program = StructParser.parse( new String[]{ "src/test/jolie/AggregateTest.ol" } );
 
-      var program = StructParser.parse( new String[]{ "src/test/jolie/RepositoryTest.ol" } );
+      var program = StructParser.parse( new String[]{ "src/test/jolie/example-edit_paper.ol" } );
       var results = new DomainDrivenDesignAnalyzer( program ).analyze();
       printDDDResults( results );
 
-      var modelProgram = StructParser.parse( new String[]{ "src/test/jolie/sample-2.ol" } );
-      var jolieProgram = StructParser.parse( new String[]{ "src/test/jolie//sample-2-edit.ol" } );
+      var modelProgram = StructParser.parse( new String[]{ "src/test/jolie/example-gen.ol" } );
+      var jolieProgram = StructParser.parse( new String[]{ "src/test/jolie/example-edit_paper.ol" } );
 
       var jolieComparator = new JolieComparator( modelProgram, jolieProgram );
       var compareResults = jolieComparator.compare();

@@ -15,6 +15,6 @@ public class BoundedContext implements Annotation {
 
   @Override
   public int hashCode() {
-    return toString().hashCode();
+    return context.hashCode();
   }
 }
