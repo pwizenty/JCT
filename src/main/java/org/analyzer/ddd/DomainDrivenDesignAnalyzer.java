@@ -219,7 +219,7 @@ public class DomainDrivenDesignAnalyzer implements Analyzer {
       results.add(new DDDResult( type.getName(), type.getLine(),
         "Value Object and Entity can't be used for the same type.", ResultStatus.VIOLATION ));
     } else {
-      results.add(new DDDResult( type.getName(), type.getLine(), "Value Object has no entity annotation",
+      results.add(new DDDResult( type.getName(), type.getLine(), "Value Object has no entity annotation.",
         ResultStatus.CORRECT ));
     }
     return results;

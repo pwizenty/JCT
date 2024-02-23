@@ -60,7 +60,5 @@ public class StructParser {
      BoundedContextParser.parse( args ).stream().collect( Collectors.toSet()),
      interfaces
    );
-
  }
-
 }

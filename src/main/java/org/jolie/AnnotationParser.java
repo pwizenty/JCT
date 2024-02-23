@@ -21,14 +21,6 @@
 
 package org.jolie;
 
-import jolie.lang.parse.ast.InterfaceDefinition;
-import jolie.lang.parse.ast.types.TypeChoiceDefinition;
-import jolie.lang.parse.ast.types.TypeDefinitionLink;
-import jolie.lang.parse.ast.types.TypeInlineDefinition;
-import org.utils.Interface;
-import org.utils.Operation;
-import org.utils.Type;
-import org.utils.TypeWithCardinality;
 import org.utils.annotations.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -46,7 +38,7 @@ public class AnnotationParser {
     aMap.put( "Aggregate", Aggregate.class );
     aMap.put( "Repository", Repository.class );
     aMap.put( "Value_Object", ValueObject.class );
-    aMap.put( "CONTEXT", BoundedContext.class );
+    aMap.put( "ctz", BoundedContext.class );
   }
 
   public AnnotationParser() {
@@ -79,5 +71,4 @@ public class AnnotationParser {
       return Optional.of( new UnrecognizedAnnotation( s ) );
     }
   }
-
 }

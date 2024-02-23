@@ -10,35 +10,54 @@ import org.comparator.CompareResult;
 import org.comparator.jolie.JolieComparator;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Main {
 
   public static void main( String[] args ) {
     try {
-      /**
-      System.out.println(
-          StructParser.parse( new String[]{ "src/test/jolie/MyInterface.ol" } )
-      );*/
+      var plugins = new LinkedList<String>(Arrays.stream(args).filter(plugin ->
+        plugin.equals("D3PC") || plugin.startsWith("LEMMA4Jolie") || plugin.startsWith("--help")).toList());
 
-      // Start program analysis
-      // Check for entity violations
-      //var program = StructParser.parse( new String[]{ "src/test/jolie/EntityTest.ol" } );
-      //var program = StructParser.parse( new String[]{ "src/test/jolie/AggregateTest.ol" } );
+      // help
+      if (plugins.contains("--help")) {
+        printHelp();
+      }
 
-      var program = StructParser.parse( new String[]{ "src/test/jolie/example-edit_paper.ol" } );
-      var results = new DomainDrivenDesignAnalyzer( program ).analyze();
-      printDDDResults( results );
+      // D§PC
+      if (plugins.contains("D3PC")) {
+        var jolieProgram = args[args.length - 1];
+        var program = StructParser.parse( new String[]{ jolieProgram } );
+        var results = new DomainDrivenDesignAnalyzer( program ).analyze();
+        printDDDResults( results );
+      }
 
-      var modelProgram = StructParser.parse( new String[]{ "src/test/jolie/example-gen.ol" } );
-      var jolieProgram = StructParser.parse( new String[]{ "src/test/jolie/example-edit_paper.ol" } );
+      // LEMMA4Jolie
+      if (plugins.stream().anyMatch(p -> p.startsWith("LEMMA4Jolie"))) {
+        var jolieProgram = args[args.length - 1];
+        var program = StructParser.parse( new String[]{ jolieProgram } );
+        var path = plugins.stream().filter(p -> p.startsWith("LEMMA4Jolie")).findFirst().get();
 
-      var jolieComparator = new JolieComparator( modelProgram, jolieProgram );
-      var compareResults = jolieComparator.compare();
+        var regex = "source=([^&]*)";
+        var pattern = Pattern.compile(regex);
+        var matcher = pattern.matcher(path);
 
-      printCompareResults(compareResults);
+        if (matcher.find()) {
+          String modelPath = matcher.group(1).replace("}", "");
+          var modelProgram = StructParser.parse( new String[]{ modelPath } );
+          var jolieComparator = new JolieComparator( modelProgram, program );
+          var compareResults = jolieComparator.compare();
+          printCompareResults(compareResults);
 
-
+        } else {
+          System.out.println("Jolie model path not present");
+        }
+      }
     } catch ( IOException | CommandLineException | ParserException | CodeCheckingException | ModuleException e ) {
       e.printStackTrace();
     }
@@ -50,7 +69,7 @@ public class Main {
     System.out.println( "+------------------------------------------------------------------------------------------------+" );
     for ( DDDResult DDDResult : DDDResults) {
       System.out.printf( "| %-25s | %-11d | %-40s | %-9s |\n",
-          DDDResult.getViolationName(), DDDResult.getLineNumber(), DDDResult.getDescription(), DDDResult.getStatus() );
+        DDDResult.getViolationName(), DDDResult.getLineNumber(), DDDResult.getDescription(), DDDResult.getStatus() );
     }
   }
 
@@ -58,10 +77,19 @@ public class Main {
     System.out.println( "+----------------------------------------------------------------------------------------------------------------+" );
     System.out.println( "| Name                      | Line Number | Description                              | Status    | Type          |" );
     System.out.println( "+----------------------------------------------------------------------------------------------------------------+" );
-    for ( CompareResult compareResult : compareResults) {
+    var sortedResults = compareResults.stream().sorted(Comparator.comparingInt(CompareResult::getLineNumber)).toList();
+    for ( CompareResult compareResult : sortedResults) {
       System.out.printf( "| %-25s | %-11d | %-40s | %-9s | %-13s |\n",
         compareResult.getModelName(), compareResult.getLineNumber(), compareResult.getMessage(),
           compareResult.getStatus(), compareResult.getType() );
     }
+  }
+
+  public static void printHelp() {
+    System.out.println("Jolie Checker Toolchain Help (JCT):");
+    System.out.println("To execute JCT via terminal use the following parameters:");
+    System.out.println("  -p D3PC -  Enables the DDD consistency checks.");
+    System.out.println("  -p LEMMA4Jolie={source=<lemma_model.ol>} -  Enables compliance check with the lemma_model.ol file.");
+    System.out.println("  File path to the Jolie source file 'example-3-jolie.ol'");
   }
 }

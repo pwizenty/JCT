@@ -23,3 +23,23 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "org.jolie.Main"
+    }
+}
+
+val standalone = task("standalone", type = Jar::class) {
+    archiveClassifier.set("standalone")
+
+    // Build fat JAR
+    from(configurations.compileClasspath.get().filter{ it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
+
+    manifest {
+        attributes["Main-Class"] = "org.jolie.Main"
+    }
+}
+
