@@ -65,13 +65,13 @@ public class JolieComparator implements Comparator {
             stringBuilder.append(messagePreFix);
             symmetricDifference.forEach(annotation -> stringBuilder.append(annotation.toString().replace("{}", "")));
             var message = stringBuilder.toString();
-            return new CompareResult(typeName, "", CompareType.ANNOTATIONS, ResultStatus.VIOLATION ,
+            return new CompareResult(typeName, "", CompareType.ANNOTATION, ResultStatus.VIOLATION ,
                 message, line);
         } else if (!modelAnnotation.equals(jolieAnnotation)) {
-            return new CompareResult(typeName, "", CompareType.ANNOTATIONS, ResultStatus.VIOLATION,
+            return new CompareResult(typeName, "", CompareType.ANNOTATION, ResultStatus.VIOLATION,
                 "Different type of annotations.", line);
         } else {
-            return new CompareResult(typeName, "", CompareType.ANNOTATIONS, ResultStatus.CORRECT,
+            return new CompareResult(typeName, "", CompareType.ANNOTATION, ResultStatus.CORRECT,
                 "Matching annotations.", line);
         }
     }
