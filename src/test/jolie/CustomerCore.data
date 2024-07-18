@@ -1,0 +1,87 @@
+context Customer {
+    structure Address<entity, aggregate> {
+        long id,
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure CustomerProfileEntity {
+        long serialVersionUID,
+        string firstname,
+        string lastname,
+        date birthday,
+        Address currentAddress,
+        string email,
+        string phoneNumber,
+        MoveHistory moveHistory
+    }
+    
+    structure CustomerAggregateRoot<entity, aggregate> {
+        CustomerId id,
+        CustomerProfileEntity customerProfile
+    }
+    
+    structure CustomerResponseDto {
+        string customerId,
+        string firstname,
+        string lastname,
+        date birthday,
+        string streetAddress,
+        string postalCode,
+        string city,
+        string email,
+        string phoneNumber,
+        MoveHistory moveHistory
+    }
+    
+    structure PaginatedCustomerResponseDto {
+        string filter,
+        int limit,
+        int offset,
+        int size,
+        Customers customers
+    }
+    
+    structure CustomerResponseDtoListStructure {
+        CustomerResponseDtoList CustomerResponseDtoList
+    }
+    
+    structure CustomersResponseDto {
+        Customers customers
+    }
+    
+    structure CustomerProfileUpdateRequestDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        string streetAddress,
+        string postalCode,
+        string city,
+        string email,
+        string phoneNumber
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CitiesResponseDto {
+        Cities cities
+    }
+    
+    collection MoveHistory { Address moveHistory }
+    
+    collection Customers { CustomerResponseDto customers }
+    
+    collection CustomerResponseDtoList { CustomerResponseDto CustomerResponseDtoList }
+    
+    collection Cities { string }
+}

@@ -1,0 +1,71 @@
+context Customer {
+    structure InteractionLogAggregateRoot<entity, aggregate> {
+        string customerId,
+        string username,
+        string lastAcknowledgedInteractionId,
+        Interactions interactions
+    }
+    
+    structure InteractionEntity<entity, aggregate> {
+        string id,
+        date ^date,
+        string content,
+        boolean sentByOperator
+    }
+    
+    structure NotificationDto {
+        string customerId,
+        string username,
+        int count
+    }
+    
+    structure NotificationDtoListStructure {
+        NotificationDtoList NotificationDtoList
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure InteractionAcknowledgementDto {
+        string lastAcknowledgedInteractionId
+    }
+    
+    structure PaginatedCustomerResponseDto {
+        string filter,
+        int limit,
+        int offset,
+        int size,
+        Customers customers
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerProfileDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        AddressDto currentAddress,
+        string email,
+        string phoneNumber,
+        MoveHistory moveHistory
+    }
+    
+    structure CustomerDto {
+        string customerId,
+        CustomerProfileDto customerProfile
+    }
+    
+    collection Interactions { InteractionEntity interactions }
+    
+    collection NotificationDtoList { NotificationDto NotificationDtoList }
+    
+    collection Customers { CustomerDto customers }
+    
+    collection MoveHistory { AddressDto moveHistory }
+}

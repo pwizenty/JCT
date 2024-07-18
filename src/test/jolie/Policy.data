@@ -1,0 +1,278 @@
+context Policy {
+    structure InsuranceType {
+        string name
+    }
+    
+    structure MoneyAmount {
+        float amount,
+        Currency currency
+    }
+    
+    structure InsuranceOptionsEntity<entity, aggregate> {
+        long id,
+        date startDate,
+        InsuranceType insuranceType,
+        MoneyAmount deductible
+    }
+    
+    structure RequestStatusChange<entity, aggregate> {
+        long id,
+        date ^date,
+        RequestStatus status
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure Address {
+        long id,
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerInfoEntity {
+        long id,
+        CustomerId customerId,
+        string firstname,
+        string lastname,
+        Address contactAddress,
+        Address billingAddress
+    }
+    
+    structure InsuranceQuoteEntity {
+        long id,
+        date expirationDate,
+        MoneyAmount insurancePremium,
+        MoneyAmount policyLimit
+    }
+    
+    structure InsuranceQuoteRequestAggregateRoot<entity, aggregate> {
+        long id,
+        date ^date,
+        StatusHistory statusHistory,
+        CustomerInfoEntity customerInfo,
+        InsuranceOptionsEntity insuranceOptions,
+        InsuranceQuoteEntity insuranceQuote,
+        string policyId
+    }
+    
+    structure PolicyId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure PolicyPeriod {
+        date startDate,
+        date endDate
+    }
+    
+    structure PolicyType {
+        string name
+    }
+    
+    structure InsuringAgreementEntity {
+        long id,
+        AgreementItems agreementItems
+    }
+    
+    structure PolicyAggregateRoot<entity, aggregate> {
+        PolicyId id,
+        CustomerId customerId,
+        string FIELD_CREATION_DATE,
+        date creationDate,
+        PolicyPeriod policyPeriod,
+        PolicyType policyType,
+        MoneyAmount deductible,
+        MoneyAmount policyLimit,
+        MoneyAmount insurancePremium,
+        InsuringAgreementEntity insuringAgreement
+    }
+    
+    structure InsuringAgreementItem<entity, aggregate> {
+        long id,
+        string title,
+        string description
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerInfoDto {
+        string customerId,
+        string firstname,
+        string lastname,
+        AddressDto contactAddress,
+        AddressDto billingAddress
+    }
+    
+    structure MoneyAmountDto {
+        float amount,
+        string currency
+    }
+    
+    structure InsuranceOptionsDto {
+        date startDate,
+        string insuranceType,
+        MoneyAmountDto deductible
+    }
+    
+    structure InsuranceQuoteDto {
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure InsuranceQuoteRequestDto {
+        long id,
+        date ^date,
+        StatusHistory statusHistory,
+        CustomerInfoDto customerInfo,
+        InsuranceOptionsDto insuranceOptions,
+        InsuranceQuoteDto insuranceQuote,
+        string policyId
+    }
+    
+    structure InsuranceQuoteRequestDtoListStructure {
+        InsuranceQuoteRequestDtoList InsuranceQuoteRequestDtoList
+    }
+    
+    structure InsuranceQuoteResponseDto {
+        string status,
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure RiskFactorResponseDto {
+        int riskFactor
+    }
+    
+    structure RiskFactorRequestDto {
+        date birthday,
+        string postalCode
+    }
+    
+    structure PaginatedCustomerResponseDto {
+        string filter,
+        int limit,
+        int offset,
+        int size,
+        Customers customers
+    }
+    
+    structure CustomerProfileDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        AddressDto currentAddress,
+        string email,
+        string phoneNumber,
+        MoveHistory moveHistory
+    }
+    
+    structure CustomerDto {
+        string customerId,
+        CustomerProfileDto customerProfile
+    }
+    
+    structure CustomerDtoListStructure {
+        CustomerDtoList CustomerDtoList
+    }
+    
+    structure CustomerIdDto {
+        string id
+    }
+    
+    structure PolicyPeriodDto {
+        date startDate,
+        date endDate
+    }
+    
+    structure InsuringAgreementDto {
+        AgreementItems agreementItems
+    }
+    
+    structure PolicyDto {
+        string policyId,
+        Customer customer,
+        date creationDate,
+        PolicyPeriodDto policyPeriod,
+        string policyType,
+        MoneyAmountDto deductible,
+        MoneyAmountDto policyLimit,
+        MoneyAmountDto insurancePremium,
+        InsuringAgreementDto insuringAgreement,
+        Expandable expandable
+    }
+    
+    structure PolicyDtoListStructure {
+        PolicyDtoList PolicyDtoList
+    }
+    
+    structure CreatePolicyRequestDto {
+        string customerId,
+        PolicyPeriodDto policyPeriod,
+        string policyType,
+        MoneyAmountDto deductible,
+        MoneyAmountDto policyLimit,
+        MoneyAmountDto insurancePremium,
+        InsuringAgreementDto insuringAgreement
+    }
+    
+    structure PolicyAggregateRootListStructure {
+        PolicyAggregateRootList PolicyAggregateRootList
+    }
+    
+    structure PaginatedPolicyResponseDto {
+        int limit,
+        int offset,
+        int size,
+        Policies policies
+    }
+    
+    enum RequestStatus {
+        REQUEST_SUBMITTED,
+        REQUEST_REJECTED,
+        QUOTE_RECEIVED,
+        QUOTE_ACCEPTED,
+        QUOTE_REJECTED,
+        QUOTE_EXPIRED,
+        POLICY_CREATED
+    }
+    
+    structure Currency {
+        unspecified currency
+    }
+    
+    collection StatusHistory { RequestStatusChange statusHistory }
+    
+    collection AgreementItems { InsuringAgreementItem agreementItems }
+    
+    collection InsuranceQuoteRequestDtoList { InsuranceQuoteRequestDto InsuranceQuoteRequestDtoList }
+    
+    collection Customers { CustomerDto customers }
+    
+    collection MoveHistory { AddressDto moveHistory }
+    
+    collection CustomerDtoList { CustomerDto CustomerDtoList }
+    
+    structure Customer {
+        unspecified customer
+    }
+    
+    structure Expandable {
+        unspecified expandable
+    }
+    
+    collection PolicyDtoList { PolicyDto PolicyDtoList }
+    
+    collection PolicyAggregateRootList { PolicyAggregateRoot PolicyAggregateRootList }
+    
+    collection Policies { PolicyDto policies }
+}

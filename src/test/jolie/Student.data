@@ -1,0 +1,9 @@
+context Student {
+    structure Student<entity, aggregate> {
+        long id,
+        string name,
+        Exams exams
+    }
+    
+    collection Exams { string }
+}

@@ -12,14 +12,15 @@ import org.comparator.jolie.JolieComparator;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Main {
 
   public static void main( String[] args ) {
+    var start = new Date();
     try {
       var plugins = new LinkedList<String>(Arrays.stream(args).filter(plugin ->
         plugin.equals("D3PC") || plugin.startsWith("LEMMA4Jolie") || plugin.startsWith("--help")).toList());
@@ -36,7 +37,7 @@ public class Main {
         var results = new DomainDrivenDesignAnalyzer( program ).analyze();
         printDDDResults( results );
       }
-
+      
       // LEMMA4Jolie
       if (plugins.stream().anyMatch(p -> p.startsWith("LEMMA4Jolie"))) {
         var jolieProgram = args[args.length - 1];
@@ -61,6 +62,10 @@ public class Main {
     } catch ( IOException | CommandLineException | ParserException | CodeCheckingException | ModuleException e ) {
       e.printStackTrace();
     }
+    var end = new Date();
+    var time = end.getTime() - start.getTime();
+    System.out.println("Milisecond: " + time );
+
   }
 
   public static void printDDDResults( List<DDDResult> DDDResults) {
